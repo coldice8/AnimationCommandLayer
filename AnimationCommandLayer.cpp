@@ -70,7 +70,6 @@ namespace myplayer {
 			pathStr.append("EndLesson").append(to_string(GameData::getInstance()->voUser->m_lessonId)).append(".csb");
 			m_animationVO = m_AnimEndVO;
 		}
-		MusicAudio::getInstance()->play(m_animationVO->m_AnimBgMusic, 0, true);
 
 		CCLOG(pathStr.c_str());
 		if (! FileUtils::getInstance()->isFileExist(pathStr))
@@ -78,9 +77,11 @@ namespace myplayer {
 			CocosToast::createToastWithIconv("此动画文件不存在");
 			return;
 		}
+		MusicAudio::getInstance()->play(m_animationVO->m_AnimBgMusic, 0, true);
+
 		pNode = CSLoader::createNode(pathStr);
 		pNode->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-		pNode->setAnchorPoint(Point(0.5f, 0.5f));
+		pNode->setAnchorPoint(Vec2(0.5f, 0.5f));
 		this->addChild(pNode);
 
 		for (int i = 0; i<m_animationVO->m_SpineAnimVector.size(); i++)
@@ -101,8 +102,8 @@ namespace myplayer {
 
 		//创建button里面的参数必填，不能设为NULL，就算没有也得用""，因为该函数是形参为引用变量。
 		//播放暂停按钮
-		Button* playBtn = createButton("image/button/ui_pauseU.png", "", "", Point(10, 10), "pause");
-		playBtn->setAnchorPoint(Point(0, 0));
+		Button* playBtn = createButton("image/button/ui_pauseU.png", "", "", Vec2(10, 10), "pause");
+		playBtn->setAnchorPoint(Vec2(0, 0));
 		this->addChild(playBtn, 10);
 
 		auto theCallBack = [this](Ref* sender, Widget::TouchEventType touchType)->void{
